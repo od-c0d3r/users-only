@@ -1,0 +1,22 @@
+<h1>Posts index</h1>
+
+<ul>
+    <% if user_signed_in? %>
+            <% @posts.each do |post|%>
+                <% user = User.find(post.user_id) %>
+                <li><%= user.name %> posted <%= link_to post.title, post %></li>
+            <%end%>
+    <% else %>
+            <% @posts.each do |post|%>
+                <li><%= link_to post.title, post %></li>
+            <%end%>
+    <% end %>
+</ul>
+
+<% if !user_signed_in? %>
+    <%= link_to "Login", new_user_session_path %> or you can <%= link_to "Sign up", new_user_registration_path %>
+<%else%>
+    <%= link_to "Create Post", new_post_path %> <br>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<%end%>
+
